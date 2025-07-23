@@ -4,16 +4,21 @@ public class ShipHit : MonoBehaviour
 {
     [SerializeField] private GameObject explosionEffect;
 
+    public int health = 100;
+
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            // —оздать эффект взрыва
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            health -= 40;
 
-            // ”ничтожить корабль
-            Destroy(gameObject);
+            if (health <= 0)
+            {
+                Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                // ”ничтожить корабль
+                Destroy(gameObject);
+            }
 
             // ”ничтожить снар€д
             Destroy(collision.gameObject);
